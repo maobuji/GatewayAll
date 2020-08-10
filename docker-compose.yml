@@ -33,7 +33,6 @@ services:
     networks:
       apisix-dashboard:
         ipv4_address: 192.168.5.11
-
   etcd:
     image: bitnami/etcd:3.4.9
     user: root
@@ -51,6 +50,13 @@ services:
     networks:
       apisix-dashboard:
         ipv4_address: 192.168.5.10
+
+#  logstash:
+#    image: "es_logstash"
+#    restart: always
+#    volumes:
+#      - ./config-dir:/config-dir
+#    command: logstash -f /config-dir/logstash.conf
 
   web1:
     image: ruby:2-alpine
