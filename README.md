@@ -1,10 +1,30 @@
+### 端口说明
+mysql 3309
+grafana 3000
+apisic_Dashboard 80
+apisix 9080/9443
+apisix_manager 8080
+web1_test 9081
+web1_test 9082
+prometheus 9090
+etcd 2379
+
 ### Run
 
 ```
-$ chmod +x gen-config-yaml.sh
-$ sh gen-config-yaml.sh
-$ docker-compose -p docker-apisix up -d
+$ ./gatewayStart.sh
 ```
+
+### Clean
+
+```
+$ ./gatewayStop.sh
+
+$ ./gatewayClear.sh
+
+$ ./
+```
+
 
 ### Configure
 

@@ -15,6 +15,10 @@ docker network ls
 
 删除网络配置
 docker network rm $networkName
+
+进入容器命令行
+docker exec -it $ContainerID bash
+
 ```
 
 
