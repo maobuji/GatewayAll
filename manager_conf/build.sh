@@ -21,7 +21,7 @@ pwd=`pwd`
 
 export MYSQL_SERVER_ADDRESS="192.168.5.14:3306"
 export MYSQL_USER=root
-export MYSQL_PASSWORD=123456
+export MYSQL_PASSWORD=mysqlpw_123456
 export SYSLOG_HOST=127.0.0.1
 export APISIX_BASE_URL="http://192.168.5.11:9080/apisix/admin"
 export APISIX_API_KEY="edd1c9f034335f136f87ad84b625c8f1"
