@@ -1,3 +1,8 @@
+### gihub地址 
+```
+git clone https://github.com/maobuji/GatewayAll.git
+```
+
 ### 端口说明
 mysql 3309
 grafana 3000
