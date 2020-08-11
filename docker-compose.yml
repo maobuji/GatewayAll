@@ -134,7 +134,7 @@ services:
         ipv4_address: 192.168.5.18
 
   logstash:
-    image: logstash:7.8.0
+    image: registry.cn-shenzhen.aliyuncs.com/maobuji/logstash:latest
     restart: always
     volumes:
       - ./logstash_conf:/usr/share/logstash/pipeline:rw
