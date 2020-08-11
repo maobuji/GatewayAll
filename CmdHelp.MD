@@ -17,7 +17,8 @@ docker network ls
 docker network rm $networkName
 
 进入容器命令行
-docker exec -it $ContainerID bash
+docker exec -it $ContainerID  bash
+docker exec -it --user root $ContainerID bash
 
 从容器中拷贝文件
 docker cp $ContainerID:$filePath $targetFilePath
