@@ -139,6 +139,7 @@ services:
       volumes:
         - ./logstash_conf:/logstash_conf:rw
         - ./logstash_log:/logstash_log:rw
+        - ./apisix_log:/logstash_read:rw
 #        command:
 #        - logstash -f /config-dir/logstash.conf
       ports:
