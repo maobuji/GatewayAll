@@ -26,7 +26,6 @@ services:
       - ./apisix_conf/apisix:/usr/bin/apisix:ro
     depends_on:
       - etcd
-    ##network_mode: host
     ports:
       - "9080:9080/tcp"
       - "9443:9443/tcp"
@@ -50,14 +49,6 @@ services:
     networks:
       apisix-dashboard:
         ipv4_address: 192.168.5.10
-
-#  logstash:
-#    image: "es_logstash"
-#    restart: always
-#    volumes:
-#      - ./config-dir:/config-dir
-#    command: logstash -f /config-dir/logstash.conf
-
   web1:
     image: ruby:2-alpine
     command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
@@ -88,7 +79,7 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./mysql_conf:/etc/mysql/conf.d
-      - ./script/db:/docker-entrypoint-initdb.d
+      - ./mysql_init_script/db:/docker-entrypoint-initdb.d
     networks:
       apisix-dashboard:
         ipv4_address: 192.168.5.14
@@ -138,6 +129,32 @@ services:
     restart: always
     ports:
       - "80:80/tcp"
+    networks:
+      apisix-dashboard:
+        ipv4_address: 192.168.5.18
+
+    logstash:
+      image: docker.elastic.co/logstash/logstash:7.8.0
+      restart: always
+      volumes:
+        - ./logstash_conf:/logstash_conf:rw
+        - ./logstash_log:/logstash_log:rw
+#        command:
+#        - logstash -f /config-dir/logstash.conf
+      ports:
+        - "9600:9600/tcp"
+        - "5044:5044/tcp"
+      networks:
+        apisix-dashboard:
+          ipv4_address: 192.168.5.19
+
+        #  logstash:
+        #    image: "es_logstash"
+        #    restart: always
+        #    volumes:
+        #      - ./config-dir:/config-dir
+        #    command: logstash -f /config-dir/logstash.conf
+
 
 networks:
   apisix-dashboard:
