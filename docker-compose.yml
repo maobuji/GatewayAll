@@ -133,29 +133,21 @@ services:
       apisix-dashboard:
         ipv4_address: 192.168.5.18
 
-    logstash:
-      image: docker.elastic.co/logstash/logstash:7.8.0
-      restart: always
-      volumes:
-        - ./logstash_conf:/logstash_conf:rw
-        - ./logstash_log:/logstash_log:rw
-        - ./apisix_log:/logstash_read:rw
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.8.0
+    restart: always
+    volumes:
+      - ./logstash_conf:/logstash_conf:rw
+      - ./logstash_log:/logstash_log:rw
+      - ./apisix_log:/logstash_read:rw
 #        command:
 #        - logstash -f /config-dir/logstash.conf
-      ports:
-        - "9600:9600/tcp"
-        - "5044:5044/tcp"
-      networks:
-        apisix-dashboard:
-          ipv4_address: 192.168.5.19
-
-        #  logstash:
-        #    image: "es_logstash"
-        #    restart: always
-        #    volumes:
-        #      - ./config-dir:/config-dir
-        #    command: logstash -f /config-dir/logstash.conf
-
+    ports:
+      - "9600:9600/tcp"
+      - "5044:5044/tcp"
+    networks:
+      apisix-dashboard:
+      ipv4_address: 192.168.5.19
 
 networks:
   apisix-dashboard:
