@@ -140,9 +140,8 @@ services:
       - ./logstash_read_conf:/usr/share/logstash/logstash_read_conf:rw
       - ./logstash_read_log:/usr/share/logstash/logstash_read_log:rw
       - ./apisix_log:/usr/share/logstash/logstash_read:rw
-    command:
-      - bin/logstash-plugin install file:///usr/share/logstash/logstash_read_conf/logstash-output-jdbc.zip
-      - nohup logstash -f ./logstash_read_conf/read_apisix_log_2_mysql.conf --config.reload.automatic >> ./logstash_read_log/logstash.log &
+    command: sh -c "bin/logstash-plugin install file:///usr/share/logstash/logstash_read_conf/logstash-output-jdbc.zip &&
+                    nohup logstash -f ./logstash_read_conf/read_apisix_log_2_mysql.conf --config.reload.automatic >> ./logstash_read_log/logstash.log &"
     ports:
       - "9600:9600/tcp"
       - "5044:5044/tcp"
