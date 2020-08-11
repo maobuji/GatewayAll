@@ -134,14 +134,15 @@ services:
         ipv4_address: 192.168.5.18
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.8.0
+    image: logstash:7.8.0
     restart: always
     volumes:
-      - ./logstash_conf:/logstash_conf:rw
-      - ./logstash_log:/logstash_log:rw
-      - ./apisix_log:/logstash_read:rw
-#        command:
-#        - logstash -f /config-dir/logstash.conf
+      - ./logstash_read_conf:/usr/share/logstash/logstash_read_conf:rw
+      - ./logstash_read_log:/usr/share/logstash/logstash_read_log:rw
+      - ./apisix_log:/usr/share/logstash/logstash_read:rw
+#    command:
+#      - bin/logstash-plugin install file:///usr/share/logstash/logstash_read_conf/logstash-output-jdbc.zip
+#      - logstash -f /config-dir/logstash.conf
     ports:
       - "9600:9600/tcp"
       - "5044:5044/tcp"
