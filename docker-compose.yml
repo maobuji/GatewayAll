@@ -147,7 +147,7 @@ services:
       - "5044:5044/tcp"
     networks:
       apisix-dashboard:
-      ipv4_address: 192.168.5.19
+        ipv4_address: 192.168.5.19
 
 networks:
   apisix-dashboard:
