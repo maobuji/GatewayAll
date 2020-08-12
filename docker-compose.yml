@@ -140,6 +140,7 @@ services:
       - ./logstash_conf:/usr/share/logstash/pipeline:rw
       - ./apisix_log:/usr/share/logstash/logstash_read/:rw
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
+      - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.21.jar:ro
     ports:
       - "9600:9600/tcp"
       - "5044:5044/tcp"
