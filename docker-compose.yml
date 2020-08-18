@@ -136,6 +136,8 @@ services:
   logstash:
     image: registry.cn-shenzhen.aliyuncs.com/maobuji/logstash:latest
     restart: always
+    stdin_open: true
+    tty: true
     volumes:
       - ./logstash_conf:/usr/share/logstash/pipeline:rw
       - ./apisix_log:/usr/share/logstash/logstash_read/:rw

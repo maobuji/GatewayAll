@@ -21,7 +21,14 @@ docker exec -it $ContainerID  bash
 docker exec -it --user root $ContainerID bash
 
 从容器中拷贝文件
-docker cp $ContainerID:$filePath $targetFilePath
+docker cp $ContainerID:$sourceFilePath $targetFilePath
+docker cp $sourceFilePath $ContainerID:$targetFilePath
+
+启动一个不停止的镜像 
+docker run -di --name=$tagname $imageID:version
+
+将容器打包成容器
+docker commit $ContainerID $imageID:version
 
 ```
 
