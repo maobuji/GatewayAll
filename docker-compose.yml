@@ -136,9 +136,10 @@ services:
   logstash:
     image: registry.cn-shenzhen.aliyuncs.com/maobuji/logstash:latest
     restart: always
-    stdin_open: true
-    tty: true
+#    stdin_open: true
+#    tty: true
     volumes:
+      - ./logstash_cmd/docker-entrypoint:/usr/local/bin/docker-entrypoint:rw
       - ./logstash_conf:/usr/share/logstash/pipeline:rw
       - ./apisix_log:/usr/share/logstash/logstash_read/:rw
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
