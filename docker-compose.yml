@@ -151,8 +151,6 @@ services:
         ipv4_address: 192.168.5.19
 
 
-
-
 networks:
   gateway-network:
     driver: bridge
