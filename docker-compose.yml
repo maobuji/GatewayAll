@@ -149,7 +149,57 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.19
-
+  zookeeper:
+    image: zookeeper:3.5.5
+    restart: always
+    container_name: zookeeper
+    ports:
+      - "2182:2181"
+    expose:
+      - "2181"
+    environment:
+      ZOO_MY_ID: 1
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.20
+  kafka:
+    image: wurstmeister/kafka:2.12-2.2.1
+    restart: always
+    container_name: kafka
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9090
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9090
+      - KAFKA_ZOOKEEPER_CONNECT=192.168.5.20:2181
+      - KAFKA_MESSAGE_MAX_BYTES=2000000
+      #- KAFKA_CREATE_TOPICS=${KAFKA_BOOTSTRAP_CREATE_TOPICS}
+      #- KAFKA_HEAP_OPTS=${KAFKA_JVM_OPTS}
+    ports:
+      - "9090:9090"
+    hostname: 192.168.5.21
+    volumes:
+      - ./kafka_data:/kafka
+    expose:
+      - "9090"
+    depends_on:
+      - zookeeper
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.21
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    container_name: kafka-manager
+    ports:
+      - "9000:9000/tcp"
+    environment:
+      ZK_HOSTS: 192.168.5.20:2181
+      APPLICATION_SECRET: "admin"
+    depends_on:
+      - zookeeper
+      - kafka
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.22
 
 networks:
   gateway-network:
