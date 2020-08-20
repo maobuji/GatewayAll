@@ -30,7 +30,7 @@ services:
       - "9080:9080/tcp"
       - "9443:9443/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.11
   etcd:
     image: bitnami/etcd:3.4.9
@@ -47,7 +47,7 @@ services:
     ports:
       - "2379:2379/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.10
   web1:
     image: ruby:2-alpine
@@ -56,7 +56,7 @@ services:
     ports:
       - "9081:8000/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.12
 
   web2:
@@ -66,7 +66,7 @@ services:
     ports:
       - "9082:8000/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.13
 
   mysql:
@@ -81,7 +81,7 @@ services:
       - ./mysql_conf:/etc/mysql/conf.d
       - ./mysql_init_script/db:/docker-entrypoint-initdb.d
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.14
 
   manager:
@@ -94,7 +94,7 @@ services:
     volumes:
       - ./manager_conf/build.sh:/root/manager-api/build.sh
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.15
 
   prometheus:
@@ -106,7 +106,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.16
 
   grafana:
@@ -121,7 +121,7 @@ services:
       - "./grafana_conf/dashboards:/var/lib/grafana/dashboards"
       - "./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.17
 
   dashboard:
@@ -130,7 +130,7 @@ services:
     ports:
       - "80:80/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.18
 
   logstash:
@@ -147,11 +147,14 @@ services:
       - "9600:9600/tcp"
       - "5044:5044/tcp"
     networks:
-      apisix-dashboard:
+      gateway-network:
         ipv4_address: 192.168.5.19
 
+
+
+
 networks:
-  apisix-dashboard:
+  gateway-network:
     driver: bridge
     ipam:
       config:
