@@ -168,19 +168,19 @@ services:
     container_name: kafka
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9090
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9090
+      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9092
       - KAFKA_ZOOKEEPER_CONNECT=192.168.5.20:2181
       - KAFKA_MESSAGE_MAX_BYTES=2000000
       #- KAFKA_CREATE_TOPICS=${KAFKA_BOOTSTRAP_CREATE_TOPICS}
       #- KAFKA_HEAP_OPTS=${KAFKA_JVM_OPTS}
     ports:
-      - "9090:9090"
+      - "9092:9092/tcp"
     hostname: 192.168.5.21
     volumes:
       - ./kafka_data:/kafka
     expose:
-      - "9090"
+      - "9092"
     depends_on:
       - zookeeper
     networks:
