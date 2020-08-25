@@ -36,6 +36,30 @@ sudo tee /etc/docker/daemon.json <<-'EOF'
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+
+# 配置dns
+
+#查看Network Manager服务状态
+systemctl status  NetworkManager
+
+#停止Network Manager服务
+systemctl stop  NetworkManager
+
+#关闭Network Manager开机启动
+systemctl disable  NetworkManager
+
+# 添加dns
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+PEERDNS=no
+
+vim /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 114.114.114.114
+
+systemctl restart network
+
+# 登录阿里源
+sudo docker login --username=16770864@qq.com registry.cn-shenzhen.aliyuncs.com
 ```
 
 ###安装docker-compose 
