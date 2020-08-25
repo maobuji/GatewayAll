@@ -4,6 +4,9 @@
 删除镜像
 docker rmi $imageID
 
+删除所有镜像
+docker rmi $(docker images -q) -f
+
 查看容器详细信息
 docker inspect $ContainerID
 
@@ -15,6 +18,8 @@ docker network ls
 
 删除网络配置
 docker network rm $networkName
+
+
 
 进入容器命令行
 docker exec -it $ContainerID  bash
