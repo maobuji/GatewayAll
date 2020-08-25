@@ -6,6 +6,15 @@ wget https://github.com/maobuji/GatewayAll/archive/master.zip
 unzip master.zip
 ```
 
+### 软件安装
+```
+关闭防火墙，如果不关闭则，从容器访问宿主机时会出现No route to host错误。
+systemctl stop firewalld.service
+
+禁止firewall开机启动
+systemctl disable firewalld.service 
+```
+
 ### 端口说明
 |应用|地址&端口|
 |---|---|
