@@ -1,2 +1,2 @@
 #!/bin/sh
-docker-compose -p docker-apisix down
+docker-compose -p docker-gateway down
