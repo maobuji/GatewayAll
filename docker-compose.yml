@@ -139,7 +139,8 @@ services:
 #    stdin_open: true
 #    tty: true
     volumes:
-      - ./logstash_conf:/usr/share/logstash/pipeline:rw
+      - ./logstash_conf/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
+      - ./logstash_conf/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:rw
       - ./apisix_log:/usr/share/logstash/logstash_read/:rw
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.21.jar:ro
@@ -168,14 +169,19 @@ services:
     container_name: kafka
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9092
+      - KAFKA_ADVERTISED_LISTENERS=INSIDE://192.168.5.21:9092,OUTSIDE://172.18.100.71:9094
+      - KAFKA_LISTENERS=INSIDE://:9092,OUTSIDE://:9094
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
+#      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9092
+#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9092
       - KAFKA_ZOOKEEPER_CONNECT=192.168.5.20:2181
       - KAFKA_MESSAGE_MAX_BYTES=2000000
       #- KAFKA_CREATE_TOPICS=${KAFKA_BOOTSTRAP_CREATE_TOPICS}
       #- KAFKA_HEAP_OPTS=${KAFKA_JVM_OPTS}
     ports:
       - "9092:9092/tcp"
+      - "9094:9094/tcp"
     hostname: 192.168.5.21
     volumes:
       - ./kafka_data:/kafka
