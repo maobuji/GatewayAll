@@ -1,14 +1,14 @@
- curl  http://172.18.100.71:8080/apisix/admin/routes/c1beea9e-914f-4476-8d75-0ddb97d7c2f3 -X PUT --data "@post.txt" -v
-
+curl  http://172.18.100.71:8080/apisix/admin/routes/c1beea9e-914f-4476-8d75-0ddb97d7c2f3 -X PUT --data "@post.txt" -v
+curl  http://172.18.100.71:8080/apisix/admin/routes/4b74fc10-6446-4787-9ba4-9406f6933c21 -X PUT --data "@post.txt" -v
 将以下文件内容放到post.txt文件中
 {
-	"name": "web_test",
-	"protocols": ["http", "https", "websocket"],
+	"name": "webtest",
+	"desc": "webtest",
+	"protocols": ["http", "https"],
 	"hosts": ["172.18.100.71"],
-	"paths": ["/test/*"],
+	"paths": ["/webtest/*"],
 	"methods": ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
 	"upstream_protocol": "keep",
-	"upstream_id": "45ccff7a-3788-48d3-9d7c-409b62a0283c",
 	"plugins": {
 		"kafka-logger": {
 			"batch_max_size": 1000,
@@ -17,19 +17,30 @@
 			},
 			"buffer_duration": 60,
 			"inactive_timeout": 5,
-			"include_req_body": true,
+			"include_req_body": false,
+			"kafka_topic": "webtest",
+			"key": "test1",
 			"max_retry_count": 0,
 			"name": "kafka logger",
 			"retry_delay": 1,
-			"timeout": 3,
-			"kafka_topic": "test",
-			"key": "key1"
+			"timeout": 3
 		}
 	},
-	"uris": ["/test/*"],
+	"uris": ["/webtest/*"],
 	"vars": [],
+	"upstream": {
+		"type": "roundrobin",
+		"nodes": {
+			"172.18.100.71:9081": 10
+		},
+		"timeout": {
+			"connect": 6000,
+			"send": 6000,
+			"read": 6000
+		}
+	},
 	"upstream_header": {},
 	"upstream_path": {
-		"to": "/"
+		"to": "/*"
 	}
 }

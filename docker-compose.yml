@@ -17,8 +17,10 @@
 version: "3"
 
 services:
+  ##apisix#############################################################################################################################
   apisix:
     image: registry.cn-shenzhen.aliyuncs.com/maobuji/apisix:latest
+    container_name: apisix
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -32,8 +34,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.11
+  ##etcd###############################################################################################################################
   etcd:
     image: bitnami/etcd:3.4.9
+    container_name: etcd
     user: root
     restart: always
     volumes:
@@ -49,8 +53,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.10
+  ##web1-test############################################################################################################################
   web1:
     image: ruby:2-alpine
+    container_name: webtest1
     command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
     restart: always
     ports:
@@ -58,9 +64,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.12
-
+  ##web2-test############################################################################################################################
   web2:
     image: ruby:2-alpine
+    container_name: webtest2
     command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
     restart: always
     ports:
@@ -68,9 +75,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.13
-
+  ##mysql############################################################################################################################
   mysql:
     image: mysql:latest
+    container_name: mysql
     restart: always
     ports:
       - "3309:3306/tcp"
@@ -83,9 +91,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.14
-
+  ##manager############################################################################################################################
   manager:
     image: registry.cn-shenzhen.aliyuncs.com/maobuji/apisix-manager:latest
+    container_name: apisix-manager
     restart: always
     ports:
       - "8080:8080/tcp"
@@ -96,9 +105,10 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.15
-
+  ##prometheus#########################################################################################################################
   prometheus:
     image: prom/prometheus
+    container_name: prometheus
     hostname: prometheus
     restart: always
     volumes:
@@ -108,7 +118,7 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.16
-
+  ##grafana##########################################################################################################################
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -123,37 +133,21 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.17
-
+  ##apisix-dashboard###################################################################################################################
   dashboard:
     image: registry.cn-shenzhen.aliyuncs.com/maobuji/apisix-dashboard:latest
+    container_name: apisix-dashboard
     restart: always
     ports:
       - "80:80/tcp"
     networks:
       gateway-network:
         ipv4_address: 192.168.5.18
-
-  logstash:
-    image: registry.cn-shenzhen.aliyuncs.com/maobuji/logstash:latest
-    restart: always
-#    stdin_open: true
-#    tty: true
-    volumes:
-      - ./logstash_conf/config/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
-      - ./logstash_conf/pipeline:/usr/share/logstash/pipeline:rw
-      - ./apisix_log:/usr/share/logstash/logstash_read/:rw
-      - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
-      - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.21.jar:ro
-    ports:
-      - "9600:9600/tcp"
-      - "5044:5044/tcp"
-    networks:
-      gateway-network:
-        ipv4_address: 192.168.5.19
+  ##zookeeper###########################################################################################################################
   zookeeper:
     image: zookeeper:3.5.5
-    restart: always
     container_name: zookeeper
+    restart: always
     ports:
       - "2182:2181"
     expose:
@@ -163,13 +157,14 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.20
+  ##kafka#################################################################################################################################
   kafka:
     image: wurstmeister/kafka:2.12-2.2.1
-    restart: always
     container_name: kafka
+    restart: always
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_ADVERTISED_LISTENERS=INSIDE://192.168.5.21:9092,OUTSIDE://172.18.100.71:9094
+      - KAFKA_ADVERTISED_LISTENERS=INSIDE://192.168.5.21:9092,OUTSIDE://${HOST_MACHINE_IP}:9094
       - KAFKA_LISTENERS=INSIDE://:9092,OUTSIDE://:9094
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
@@ -192,6 +187,7 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.21
+  ##kafka-manager############################################################################################################################
   kafka-manager:
     image: sheepkiller/kafka-manager
     container_name: kafka-manager
@@ -206,6 +202,70 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.22
+  ##elasticsearch############################################################################################################################
+  elasticsearch:
+    image:  elasticsearch:7.8.1
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - node.name=es-master
+      - cluster.name=docker-elasticsearch
+      - discovery.type=single-node     #单节点模式
+      - http.cors.enabled=true         #允许跨域访问
+      - http.cors.allow-origin=*
+      - bootstrap.memory_lock=true     # 锁内存
+      - "ES_JAVA_OPTS=${ES_JVM_OPTS}"  # 设置ES启动时JVM参数
+      - TAKE_FILE_OWNERSHIP=true       #设置ES有权直接访问主机目录
+    ports:
+      - "9200:9200"
+    expose:
+      - "9200"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data:rw
+      - ./elasticsearch/logs:/usr/share/elasticsearch/logs:rw
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.23
+  ##kibana############################################################################################################################
+  kibana:
+    image: kibana:7.8.1
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - I18N_LOCALE=zh-CN
+      - KIBANA_DEFAULTAPPID=discover
+    ports:
+      - "5601:5601"
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.24
+  ##logstash###########################################################################################################################
+  logstash:
+    image: registry.cn-shenzhen.aliyuncs.com/maobuji/logstash:latest
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    restart: always
+    #    stdin_open: true
+    #    tty: true
+    volumes:
+      - ./logstash_conf/config/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
+      - ./logstash_conf/pipeline:/usr/share/logstash/pipeline:rw
+      - ./apisix_log:/usr/share/logstash/logstash_read/:rw
+      - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
+      - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.21.jar:ro
+    ports:
+      - "9600:9600/tcp"
+      - "5044:5044/tcp"
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.25
 networks:
   gateway-network:
     driver: bridge
