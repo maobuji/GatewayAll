@@ -6,15 +6,6 @@ wget https://github.com/maobuji/GatewayAll/archive/master.zip
 unzip master.zip
 ```
 
-### 软件安装
-```
-关闭防火墙，如果不关闭则，从容器访问宿主机时会出现No route to host错误。
-systemctl stop firewalld.service
-
-禁止firewall开机启动
-systemctl disable firewalld.service 
-```
-
 ### 端口说明
 |应用|地址&端口|
 |---|---|
@@ -29,7 +20,6 @@ apisix 9080/9443
 apisix_manager 8080
 prometheus 9090
 etcd 2379
-
 
 http://172.18.100.71:8080/apisix/admin
 http://172.18.100.71:3000/d/bLlNuRLWz/apache-apisix?orgId=1&refresh=5s&from=1596789558276&to=1596791358276&var-service=All&var-route=All&var-instance=All
