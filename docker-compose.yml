@@ -139,8 +139,8 @@ services:
 #    stdin_open: true
 #    tty: true
     volumes:
-      - ./logstash_conf/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
-      - ./logstash_conf/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:rw
+      - ./logstash_conf/config/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
+      - ./logstash_conf/pipeline:/usr/share/logstash/pipeline:rw
       - ./apisix_log:/usr/share/logstash/logstash_read/:rw
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/mysql-connector-java-8.0.21.jar:ro
       - ./_driver/mysql/mysql-connector-java-8.0.21.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.21.jar:ro
@@ -206,7 +206,6 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.22
-
 networks:
   gateway-network:
     driver: bridge
