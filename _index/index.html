@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Centos7离线源与相关软件</title>
+    <style>
+        .biaoti{
+            font-family: "Microsoft Himalaya";
+            font-size: 26px;
+            border-bottom:1px dashed #CCCCCC;
+            color: #255e95;
+
+        }
+
+        .btgn{
+            font-family: "Microsoft YaHei UI";
+            font-size: 16px;
+            color: #255e95;
+            background-color: #e9faff;
+            text-align: center;
+        }
+
+
+
+
+    </style>
+    <script>
+        document.addEventListener('click', function(event) {
+           var target = event.target;
+           if (target.tagName.toLowerCase() == 'a')
+           {
+               var port = target.getAttribute('href').match(/^:(\d+)(.*)/);
+               if (port)
+               {
+                    target.href = window.location.origin;
+                    target.port = port[1];
+               }
+           }
+       }, false);
+
+    </script>
+
+</head>
+<body>
+
+<table width="60%" border="0">
+    <tr>
+        <td align="center" class="biaoti" height="60">Centos7离线源与相关软件</td>
+    </tr>
+
+</table>
+
+<table width="60%" border="1" cellspacing="1" cellpadding="4">
+
+    <tr>
+        <td rowspan="1" class="btgn">应用</td>
+        <td rowspan="1" class="btgn">组件</td>
+        <td rowspan="1" class="btgn">类型</td>
+        <td rowspan="1" class="btgn">访问地址</td>
+        <td rowspan="1" class="btgn">鉴权</td>
+        <td rowspan="1" class="btgn">备注</td>
+    </tr>
+
+    <tr>
+        <td>apusix</td>
+        <td></td>
+        <td>GATEWAY</td>
+        <td>9080</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>apusix</td>
+        <td></td>
+        <td>GATEWAY</td>
+        <td>9443</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>apusix-dashboard</td>
+        <td></td>
+        <td>APP</td>
+        <td><a href=":80"target="_blank">80</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>web1</td>
+        <td></td>
+        <td>web</td>
+        <td><a href=":9081" target="_blank">9081</a></td>
+        <td></td>
+        <td>测试应用1</td>
+    </tr>
+
+    <tr>
+        <td>web2</td>
+        <td></td>
+        <td>web</td>
+        <td><a href=":9082" target="_blank">9082</a></td>
+        <td></td>
+        <td>测试应用2</td>
+    </tr>
+
+    <tr>
+        <td>mysql</td>
+        <td></td>
+        <td>DB</td>
+        <td>3309</td>
+        <td>root/mysqlpw_123456</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>prometheus</td>
+        <td></td>
+        <td>DB</td>
+        <td>9090</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>grafana</td>
+        <td></td>
+        <td>APP</td>
+        <td><a href=":3000" target="_blank">3000</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>zookeeper</td>
+        <td></td>
+        <td>DB</td>
+        <td>2182</td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>kafka</td>
+        <td>内部</td>
+        <td>MQ</td>
+        <td>9092</td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>kafka</td>
+        <td>外部</td>
+        <td>MQ</td>
+        <td>9094</td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>kafka-manager</td>
+        <td></td>
+        <td>APP</td>
+        <td><a href=":9000" target="_blank">9000</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>elasticsearch</td>
+        <td></td>
+        <td>DB</td>
+        <td>9200</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>kibana</td>
+        <td></td>
+        <td>APP</td>
+        <td><a href=":5601" target="_blank">5601</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>logstash</td>
+        <td></td>
+        <td>APP</td>
+        <td>9600/5044</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>elastichd</td>
+        <td></td>
+        <td>APP</td>
+        <td><a href=":9800" target="_blank">9800</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+
+</table>
+
+
+</body>
+</html>
