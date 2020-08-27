@@ -7,19 +7,7 @@ unzip master.zip
 ```
 
 ### 端口说明
-|应用|地址&端口|
-|---|---|
-|apisic_Dashboard | http://gateway:80/ |    
-|web1_test |        http://gateway:9081/ |  
-|web2_test |        http://gateway:9082/  |  
-|grafana |          http://gateway:3000/ |
-   
-
-mysql 3309tel
-apisix 9080/9443
-apisix_manager 8080
-prometheus 9090
-etcd 2379
+访问http://ip:9999/ 获取信息列表
 
 http://172.18.100.71:8080/apisix/admin
 http://172.18.100.71:3000/d/bLlNuRLWz/apache-apisix?orgId=1&refresh=5s&from=1596789558276&to=1596791358276&var-service=All&var-route=All&var-instance=All
