@@ -168,8 +168,8 @@ services:
       - KAFKA_LISTENERS=INSIDE://:9092,OUTSIDE://:9094
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
-#      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9092
-#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9092
+      #      - KAFKA_LISTENERS=PLAINTEXT://192.168.5.21:9092
+      #      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.5.21:9092
       - KAFKA_ZOOKEEPER_CONNECT=192.168.5.20:2181
       - KAFKA_MESSAGE_MAX_BYTES=2000000
       #- KAFKA_CREATE_TOPICS=${KAFKA_BOOTSTRAP_CREATE_TOPICS}
@@ -266,9 +266,23 @@ services:
     networks:
       gateway-network:
         ipv4_address: 192.168.5.25
+
+  elastichd:
+    image: containerize/elastichd:latest
+    container_name: elasticsearch-hd
+    ports:
+      - "9800:9800/tcp"
+    depends_on:
+      - elasticsearch
+    links:
+      - "elasticsearch:192.168.5.23"
+    networks:
+      gateway-network:
+        ipv4_address: 192.168.5.26
+
 networks:
   gateway-network:
     driver: bridge
     ipam:
       config:
-      - subnet: 192.168.5.0/24
+        - subnet: 192.168.5.0/24
