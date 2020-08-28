@@ -23,6 +23,10 @@
 
 
 
+
+
+
+
     </style>
     <script>
         document.addEventListener('click', function(event) {
@@ -38,6 +42,10 @@
            }
        }, false);
 
+
+
+
+
     </script>
 
 </head>
@@ -50,7 +58,7 @@
 
 </table>
 
-<table width="100%" border="1" cellspacing="1" cellpadding="4">
+<table width="80%" border="1" cellspacing="1" cellpadding="4">
 
     <tr>
         <td rowspan="1" class="btgn">应用</td>
@@ -62,36 +70,59 @@
     </tr>
 
     <tr>
-        <td>apusix</td>
-        <td></td>
+        <td>apisix</td>
+        <td>apisix-gateway</td>
         <td>GATEWAY</td>
-        <td>9080</td>
+        <td>Http:9080/Https:9443</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>apusix</td>
+        <td>apisix</td>
+        <td>apisix-prometheus</td>
+        <td>DB</td>
+        <td>9090</td>
         <td></td>
-        <td>GATEWAY</td>
-        <td>9443</td>
         <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>apusix-dashboard</td>
-        <td></td>
-        <td>APP</td>
-        <td><a href=":80"target="_blank">80</a></td>
-        <td></td>
-        <td>
-        <br>http://172.18.100.71:8080/apisix/admin </br>
-        <br>http://172.18.100.71:3000/d/bLlNuRLWz/apache-apisix?orgId=1</br>
-        <br>    &refresh=5s&from=1596789558276&to=1596791358276&var-service=All&var-route=All&var-instance=All</br></td>
     </tr>
 
     <tr>
-        <td>web1</td>
+        <td>apsix</td>
+        <td>apisix-dashboard</td>
+        <td>APP</td>
+        <td><a href=":80" target="_blank">80</a></td>
         <td></td>
+        <td>网关管控台</td>
+    </tr>
+    <tr>
+        <td>apisix</td>
+        <td>apisix-manager</td>
+        <td>APP</td>
+        <td>8080</td>
+        <td></td>
+        <td>网关管控台后端</td>
+    </tr>
+    <tr>
+        <td>apisix</td>
+        <td>apisix-manager-mysql</td>
+        <td>DB</td>
+        <td>3309</td>
+        <td>root/mysqlpw_123456</td>
+        <td>网关管控台后端数据库</td>
+    </tr>
+    <tr>
+        <td>apisix</td>
+        <td>apisix-grafana</td>
+        <td>APP</td>
+        <td><a href=":3000" target="_blank">3000</a></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+
+    <tr>
+        <td>web-test</td>
+        <td>web1</td>
         <td>web</td>
         <td><a href=":9081" target="_blank">9081</a></td>
         <td></td>
@@ -99,8 +130,8 @@
     </tr>
 
     <tr>
+        <td>web-test</td>
         <td>web2</td>
-        <td></td>
         <td>web</td>
         <td><a href=":9082" target="_blank">9082</a></td>
         <td></td>
@@ -108,34 +139,35 @@
     </tr>
 
     <tr>
-        <td>mysql</td>
-        <td></td>
-        <td>DB</td>
-        <td>3309</td>
-        <td>root/mysqlpw_123456</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>prometheus</td>
-        <td></td>
-        <td>DB</td>
-        <td>9090</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>grafana</td>
-        <td></td>
+        <td>log</td>
+        <td>logstash</td>
         <td>APP</td>
-        <td><a href=":3000" target="_blank">3000</a></td>
+        <td>9600/5044</td>
+        <td></td>
+        <td>日志采集工具</td>
+    </tr>
+
+    <tr>
+        <td>log</td>
+        <td>kafka-内部</td>
+        <td>MQ</td>
+        <td>内部:9092/外部:9094</td>
+        <td></td>
+        <td>日志缓存</td>
+    </tr>
+
+    <tr>
+        <td>log</td>
+        <td>kafka-manager</td>
+        <td>APP</td>
+        <td><a href=":9000" target="_blank">9000</a></td>
         <td></td>
         <td></td>
     </tr>
 
     <tr>
+        <td>log</td>
         <td>zookeeper</td>
-        <td></td>
         <td>DB</td>
         <td>2182</td>
         <td></td>
@@ -143,67 +175,39 @@
     </tr>
 
     <tr>
-        <td>kafka</td>
-        <td>内部</td>
-        <td>MQ</td>
-        <td>9092</td>
-        <td></td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>kafka</td>
-        <td>外部</td>
-        <td>MQ</td>
-        <td>9094</td>
-        <td></td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>kafka-manager</td>
-        <td></td>
-        <td>APP</td>
-        <td><a href=":9000" target="_blank">9000</a></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
+        <td>log</td>
         <td>elasticsearch</td>
-        <td></td>
         <td>DB</td>
         <td>9200</td>
         <td></td>
-        <td></td>
+        <td>日志存储</td>
     </tr>
+
+
     <tr>
-        <td>kibana</td>
-        <td></td>
-        <td>APP</td>
-        <td><a href=":5601" target="_blank">5601</a></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>logstash</td>
-        <td></td>
-        <td>APP</td>
-        <td>9600/5044</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
+        <td>log</td>
         <td>elastichd</td>
-        <td></td>
         <td>APP</td>
         <td><a href=":9800" target="_blank">9800</a></td>
         <td></td>
+        <td>elasticsearch管理端</td>
+    </tr>
+
+    <tr>
+        <td>log</td>
+        <td>kibana</td>
+        <td>APP</td>
+        <td><a href=":5601" target="_blank">5601</a></td>
         <td></td>
+        <td>日志可视化</td>
     </tr>
 
 
 </table>
 
+<br>apisix-dashboard连接字符串<br>
+<br>http://IP:8080/apisix/admin </br>
+<br>http://IP:3000/d/bLlNuRLWz/apache-apisix?orgId=1&refresh=5s&from=1596789558276&to=1596791358276&var-service=All&var-route=All&var-instance=All</br>
 
 
 </body>
